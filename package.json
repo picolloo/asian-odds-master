@@ -1,0 +1,25 @@
+{
+  "name": "@asian-odds/worker",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "sucrase-node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bull": "^3.18.0",
+    "dotenv-safe": "^8.2.0",
+    "flexsearch": "^0.6.32",
+    "knex": "^0.21.5",
+    "pg": "^8.3.2",
+    "redis": "^3.0.2",
+    "winston": "^3.3.3",
+    "winston-aws-cloudwatch": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.5",
+    "sucrase": "^3.15.0"
+  }
+}
