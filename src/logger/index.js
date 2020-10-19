@@ -6,7 +6,7 @@ export default winston.createLogger({
   transports: [
     new winston.transports.Console(),
     new CloudWatchTransport({
-      logGroupName: "asianodds",
+      logGroupName: "aws01",
       logStreamName: "worker",
       submissionInterval: 2000,
       submissionRetryCount: 1,
