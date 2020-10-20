@@ -70,7 +70,7 @@ function GetBetTeamService() {
         counterTeamName: guestTeamStats.name,
         type: TEAM.HOME,
         fulltimeFavoured: 2,
-        teamFactor,
+        teamFactor: teamFactor * -1,
       };
     if (teamFactor < 0)
       return {
@@ -78,7 +78,7 @@ function GetBetTeamService() {
         counterTeamName: homeTeamStats.name,
         type: TEAM.GUEST,
         fulltimeFavoured: 1,
-        teamFactor: teamFactor * -1,
+        teamFactor,
       };
   }
 
