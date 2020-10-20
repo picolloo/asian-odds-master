@@ -66,9 +66,14 @@ function GetGameService() {
         (feed.homeTeam.name === teamName || feed.guestTeam.name === teamName) &&
         feed.fulltimeFavoured == fulltimeFavoured &&
         HANDICAP[teamFactor] == feed.handicap
+        
     );
-
-    return game;
+    
+    Logger.log(
+      "info",
+      `Search for ${teamName}, Favourite: ${fulltimeFavoured}, Statistics line: ${teamFactor} and AsianOdds line: ${HANDICAP[teamFactor]}. `
+    );
+      return game;
   }
 
   return {

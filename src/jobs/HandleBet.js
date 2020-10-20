@@ -63,7 +63,7 @@ export default {
 
       await Queue.add("PlaceBet", {
         gameId: game.id,
-        defaultStake: 5, //TODO get from userInformation
+        defaultStake: 6, //TODO get from userInformation
         bookTypes,
         teamName: betTeamName,
         notificationId: id,
