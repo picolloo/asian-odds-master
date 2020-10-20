@@ -5,11 +5,12 @@ export const TEAM = Object.freeze({
 
 export const BOOK_TYPES_HIERARCHY = [
   "PIN",
-  "SIN",
+  "P88",
+  "ISN",
   "SBO",
   "IBC",
-  "ISN",
   "3ET",
+  "SIN",
   "BEST",
 ];
 
