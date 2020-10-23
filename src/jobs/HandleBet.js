@@ -3,7 +3,7 @@ import Logger from "../logger";
 import Queue from "../worker";
 import { AsianOdds } from "../libs";
 import { LoginAsianOddsService, GetGameService } from "../services";
-import { BOOK_TYPES_HIERARCHY } from "../utils/constants";
+import { BOOK_TYPES_HIERARCHY, BET_DETAILS } from "../utils/constants";
 
 export default {
   key: "HandleBet",
@@ -60,11 +60,14 @@ export default {
       if (!bookTypes) {
         throw new Error(`BookType not found: ${game.bookieOdds}`);
       }
+      let aBookTypes = bookTypes.split(':');
+      aBookTypes[1] = BET_DETAILS.PRICE;
+      const finalbookTypes = aBookTypes.join(':')
 
       await Queue.add("PlaceBet", {
         gameId: game.id,
-        defaultStake: 6, //TODO get from userInformation
-        bookTypes,
+        defaultStake: BET_DETAILS.STAKE, //TODO get from userInformation
+        bookTypes:finalbookTypes,
         teamName: betTeamName,
         notificationId: id,
         teamType,

@@ -3,10 +3,15 @@ export const TEAM = Object.freeze({
   GUEST: 1,
 });
 
+export const BET_DETAILS = Object.freeze({
+  PRICE: "1.70",
+  STAKE: 6,
+});
+
 export const BOOK_TYPES_HIERARCHY = [
   "PIN",
-  "P88",
   "ISN",
+  "P88",
   "SBO",
   "IBC",
   "3ET",

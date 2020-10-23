@@ -28,6 +28,18 @@
   }
   ```
 
+
+//export const PRICE = Object.freeze({
+//  MINIMUN: "1.70",
+//  });
+
+//let aBookTypes = finalbookTypes.split(':');
+//aBookTypes[1] = PRICE.MINIMUN;
+//const finalbookTypes = aBookTypes.join(':')
+
+
+
+
 - [x] Notification schema (Only type 1)
 
   - ID (Statistics notification ID)
