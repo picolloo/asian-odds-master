@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import knex from "../database";
 import Logger from "../logger";
 import Store from "../redis";
 import { TEAM } from "../utils/constants";
@@ -201,10 +201,13 @@ const placeBet = async (
     if (data.Code === -1307) {
       return data.Result;
     }
-
+    
+    await knex("notifications").where({ id: notificationId }).del();
+    
     throw new Error(
       `AsianOdds error code: ${data.Code} on placeBet: ${data.Message}`
     );
+    
   }
   return data.Result;
 };

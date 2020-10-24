@@ -10,12 +10,12 @@ export const BET_DETAILS = Object.freeze({
 
 export const BOOK_TYPES_HIERARCHY = [
   "PIN",
+  "SIN",
   "ISN",
   "P88",
   "SBO",
   "IBC",
   "3ET",
-  "SIN",
   "BEST",
 ];
 
