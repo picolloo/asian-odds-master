@@ -19,7 +19,7 @@ function ValidateNotificationService() {
     );
 
     if (!invalidNotificationName) {
-      Logger.log("info", `Notification: ${id} for female league not handled.`);
+      Logger.log("info", `Notification: ${id} for female or friendly league not handled.`);
       return false;
     }
 
@@ -49,7 +49,7 @@ function ValidateNotificationService() {
         guestPrice: odds.aft.guestPrice,
       });
 
-      Logger.log("info", `Notification: ${id} with team factor off range.`);
+      Logger.log("info", `Notification: ${id} with team factor off range ${odds.aft.teamFactor}/${teamFactorLimit.min}/${teamFactorLimit.max}.`);
       return;
     }
 

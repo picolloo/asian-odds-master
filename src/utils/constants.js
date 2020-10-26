@@ -5,7 +5,7 @@ export const TEAM = Object.freeze({
 
 export const BET_DETAILS = Object.freeze({
   PRICE: "1.70",
-  STAKE: 6,
+  STAKE: 60,
 });
 
 export const BOOK_TYPES_HIERARCHY = [

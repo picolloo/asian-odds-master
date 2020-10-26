@@ -19,7 +19,7 @@ function GetBetTeamService() {
 
     if (team) return team;
 
-    return homeTeamStats.corners > guestTeamStats.corners
+    return homeTeamStats.shotsOnTarget >= guestTeamStats.shotsOnTarget
       ? {
           betTeamName: homeTeamStats.name,
           counterTeamName: guestTeamStats.name,
@@ -33,7 +33,7 @@ function GetBetTeamService() {
           type: TEAM.GUEST,
           fulltimeFavoured: 0,
           teamFactor,
-        };
+        };   
   }
 
   function getBetTeamGeneralNotification(
@@ -64,7 +64,8 @@ function GetBetTeamService() {
     homeTeamStats,
     guestTeamStats
   ) {
-    if (teamFactor > 0)
+
+    if ((guestTeamStats.goals > homeTeamStats.goals) && teamFactor != 0)
       return {
         betTeamName: homeTeamStats.name,
         counterTeamName: guestTeamStats.name,
@@ -72,7 +73,8 @@ function GetBetTeamService() {
         fulltimeFavoured: 2,
         teamFactor: teamFactor * -1,
       };
-    if (teamFactor < 0)
+      
+    if ((guestTeamStats.goals < homeTeamStats.goals) && teamFactor != 0)
       return {
         betTeamName: guestTeamStats.name,
         counterTeamName: homeTeamStats.name,
@@ -80,7 +82,43 @@ function GetBetTeamService() {
         fulltimeFavoured: 1,
         teamFactor,
       };
-  }
+
+    if ((guestTeamStats.goals === homeTeamStats.goals) && (homeTeamStats.redCards > guestTeamStats.redCards) && (teamFactor != 0))
+      return {
+        betTeamName: guestTeamStats.name,
+        counterTeamName: homeTeamStats.name,
+        type: TEAM.GUEST,
+        fulltimeFavoured: 1,
+        teamFactor,
+      };
+    
+    if ((guestTeamStats.goals === homeTeamStats.goals) && (guestTeamStats.redCards > homeTeamStats.redCards) && (teamFactor != 0))
+      return {
+        betTeamName: homeTeamStats.name,
+        counterTeamName: guestTeamStats.name,
+        type: TEAM.HOME,
+        fulltimeFavoured: 2,
+        teamFactor: teamFactor * -1,
+      };
+
+      if ((guestTeamStats.goals === homeTeamStats.goals) && (guestTeamStats.redCards === homeTeamStats.redCards) && teamFactor > 0 )
+      return {
+        betTeamName: homeTeamStats.name,
+        counterTeamName: guestTeamStats.name,
+        type: TEAM.HOME,
+        fulltimeFavoured: 2,
+        teamFactor: teamFactor * -1,
+      };
+      
+    if ((guestTeamStats.goals === homeTeamStats.goals) && (guestTeamStats.redCards === homeTeamStats.redCards) && teamFactor < 0 )
+      return {
+        betTeamName: guestTeamStats.name,
+        counterTeamName: homeTeamStats.name,
+        type: TEAM.GUEST,
+        fulltimeFavoured: 1,
+        teamFactor,
+      };
+    }
 
   return {
     execute,
