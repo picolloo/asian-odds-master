@@ -4,14 +4,14 @@ export const TEAM = Object.freeze({
 });
 
 export const BET_DETAILS = Object.freeze({
-  PRICE: "1.70",
+  PRICE: "1.60",
   STAKE: 60,
 });
 
 export const BOOK_TYPES_HIERARCHY = [
   "PIN",
-  "SIN",
   "ISN",
+  "SIN",
   "P88",
   "SBO",
   "IBC",

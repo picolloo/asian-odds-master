@@ -37,7 +37,7 @@
 //aBookTypes[1] = PRICE.MINIMUN;
 //const finalbookTypes = aBookTypes.join(':')
 
-
+([+-]?(?:'.+?'|".+?"|[^+\- ]{1}[^ ]*))
 
 
 - [x] Notification schema (Only type 1)
