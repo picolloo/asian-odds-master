@@ -8,6 +8,7 @@ function GetBetTeamService() {
     guestTeamStats,
   }) {
     const dogRgx = /dog/i;
+    global.globalhteamName = homeTeamStats.name;
 
     const team = dogRgx.test(name)
       ? getBetTeamDogNotification(teamFactor, homeTeamStats, guestTeamStats)
@@ -83,6 +84,24 @@ function GetBetTeamService() {
         teamFactor,
       };
 
+      if ((guestTeamStats.goals > homeTeamStats.goals) && teamFactor == 0)
+      return {
+        betTeamName: homeTeamStats.name,
+        counterTeamName: guestTeamStats.name,
+        type: TEAM.HOME,
+        fulltimeFavoured: 0,
+        teamFactor,
+      };
+      
+    if ((guestTeamStats.goals < homeTeamStats.goals) && teamFactor == 0)
+      return {
+        betTeamName: guestTeamStats.name,
+        counterTeamName: homeTeamStats.name,
+        type: TEAM.GUEST,
+        fulltimeFavoured: 0,
+        teamFactor,
+      };
+
     if ((guestTeamStats.goals === homeTeamStats.goals) && (homeTeamStats.redCards > guestTeamStats.redCards) && (teamFactor != 0))
       return {
         betTeamName: guestTeamStats.name,
@@ -99,6 +118,24 @@ function GetBetTeamService() {
         type: TEAM.HOME,
         fulltimeFavoured: 2,
         teamFactor: teamFactor * -1,
+      };
+
+      if ((guestTeamStats.goals === homeTeamStats.goals) && (homeTeamStats.redCards > guestTeamStats.redCards) && (teamFactor == 0))
+      return {
+        betTeamName: guestTeamStats.name,
+        counterTeamName: homeTeamStats.name,
+        type: TEAM.GUEST,
+        fulltimeFavoured: 0,
+        teamFactor,
+      };
+    
+    if ((guestTeamStats.goals === homeTeamStats.goals) && (guestTeamStats.redCards > homeTeamStats.redCards) && (teamFactor == 0))
+      return {
+        betTeamName: homeTeamStats.name,
+        counterTeamName: guestTeamStats.name,
+        type: TEAM.HOME,
+        fulltimeFavoured: 0,
+        teamFactor,
       };
 
       if ((guestTeamStats.goals === homeTeamStats.goals) && (guestTeamStats.redCards === homeTeamStats.redCards) && teamFactor > 0 )
@@ -118,6 +155,7 @@ function GetBetTeamService() {
         fulltimeFavoured: 1,
         teamFactor,
       };
+
     }
 
   return {

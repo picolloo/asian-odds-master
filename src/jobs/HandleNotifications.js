@@ -29,6 +29,8 @@ export default {
           homeTeamStats,
           guestTeamStats,
           teamFactorRange,
+          gameDuration,
+          currentGameDuration,
         }) => {
           const validated = await ValidateNotificationService().execute({
             id,
@@ -38,6 +40,8 @@ export default {
             homeName: homeTeamStats.name,
             guestName: guestTeamStats.name,
             teamFactorRange,
+            gameDuration,
+            currentGameDuration,
           });
 
           if (validated) {
@@ -64,6 +68,8 @@ export default {
                 teamType,
                 homeTeamStats,
                 guestTeamStats,
+                gameDuration,
+                currentGameDuration,
               },
             };
           }

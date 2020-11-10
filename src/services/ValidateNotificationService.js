@@ -1,5 +1,6 @@
 import database from "../database";
 import Logger from "../logger";
+import { NOTIFICATION_DETAILS } from "../utils/constants.js";
 
 function ValidateNotificationService() {
   async function execute({
@@ -11,6 +12,8 @@ function ValidateNotificationService() {
     homeName,
     guestName,
     teamFactorRange,
+    gameDuration,
+    currentGameDuration,
   }) {
     const invalidNotificationName = validateNotificationNames(
       name,
@@ -51,6 +54,16 @@ function ValidateNotificationService() {
 
       Logger.log("info", `Notification: ${id} with team factor off range ${odds.aft.teamFactor}/${teamFactorLimit.min}/${teamFactorLimit.max}.`);
       return;
+    }
+
+    const invalidNotificationtime = validateNotificationTime(
+      currentGameDuration,
+      gameDuration
+      );
+  
+      if (!invalidNotificationtime) {
+        Logger.log("info", `Notification: ${id} already handled.`);
+      return false;
     }
 
     const betFound = database("bets").where({ notificationId: id });
@@ -102,6 +115,21 @@ function ValidateNotificationService() {
   function validateNotificationNames(...names) {
     return !names.some((name) => /(women|friendl)/gim.test(name));
   }
+
+  function validateNotificationTime(currentGameDuration, gameDuration) {
+    
+    const maxTime = NOTIFICATION_DETAILS.TIME;
+    const [gameDurationMinutes,gameDurationseconds] = gameDuration.split(":");
+    const [currentgameDurationMinutes,currentgameDurationseconds] = currentGameDuration.split(":");
+    
+    const minutes = Math.abs(gameDurationMinutes - currentgameDurationMinutes);
+    
+    if (gameDuration == "45:00" || gameDuration == "90:00" ){
+    return false;
+    }   
+
+    return maxTime >= minutes;
+    }
 
   return {
     execute,

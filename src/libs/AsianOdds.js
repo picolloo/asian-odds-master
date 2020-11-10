@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import knex from "../database";
 import Logger from "../logger";
 import Store from "../redis";
@@ -143,11 +144,16 @@ const getFeeds = async (activeBookies, oddsType, sportId) => {
   const [football] = data.Result.Sports;
 
   return football.MatchGames.filter((game) => {
-    const excludedLeagueMatch = /((No\. of)|EFOOTBALL)/gim.test(
-      game.LeagueName
-    );
+     
+    const excludedTeamMatch = /U-17|U-19|U-20|U-21|U-23|U17|U19|U20|U21|U23/gim.test(game.HomeTeam.Name);
 
-    return !excludedLeagueMatch;
+    const excludedLeagueMatch = /((No\. of)|EFOOTBALL)/gim.test(game.LeagueName);
+
+    const teamUnder = /U-17|U-19|U-20|U-21|U-23|U17|U19|U20|U21|U23/gim.test(global.globalhteamName); 
+    
+    if (teamUnder) return !excludedLeagueMatch;
+
+    return !excludedLeagueMatch && !excludedTeamMatch;
   }).map((game) => ({
     id: game.GameId,
     guestTeam: {
@@ -212,6 +218,31 @@ const placeBet = async (
   return data.Result;
 };
 
+const ValidateBet = async (notificationId) => {
+  const { data } = await axios.get(`${await Store.get("AOUrl")}/GetBetByReference`, {
+    headers: {
+      accept: "application/json",
+      AOToken: await Store.get("AOToken"),
+    },
+    params: {
+      betReference: "WA-" + notificationId,
+      
+    },
+  });
+
+  if (data.Code < 0) {
+        
+    await knex("notifications").where({ id: notificationId }).del();
+
+    throw new Error(
+      `Bet confirmed by Asian Odds, but the bet doesn't exist. Deleting notification ID: ${notificationId}`
+    );
+    
+  }
+  
+  return data.Code;
+};
+
 export default {
   login,
   isLoggedIn,
@@ -219,4 +250,5 @@ export default {
   getSportId,
   getFeeds,
   placeBet,
+  ValidateBet,
 };

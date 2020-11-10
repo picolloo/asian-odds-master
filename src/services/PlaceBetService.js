@@ -1,6 +1,6 @@
 import knex from "../database";
 import Logger from "../logger";
-
+import Queue from "../worker";
 import { TEAM } from "../utils/constants";
 import { AsianOdds } from "../libs";
 
@@ -58,12 +58,16 @@ function PlaceBetService() {
       .where({ id: notificationId })
       .update({ placedBet: true });
 
-    await knex("bets").insert({
-      team: teamName,
-      price: defaultStake,
-      notificationId,
+    //await knex("bets").insert({
+    //  team: teamName,
+    //  price: defaultStake,
+    //  notificationId,
       // retries,
-      reference: bet.BetPlacementReference,
+    //  reference: bet.BetPlacementReference,
+    //});
+
+    await Queue.add("ValidateBet", {
+      notificationId: notificationId,
     });
   }
 

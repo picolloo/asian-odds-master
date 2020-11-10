@@ -36,10 +36,18 @@ function parseNotificationObject(notification) {
   let match = teamFactorRegex.exec(name) || [];
   const [, teamFactorRangeMatch] = match;
 
-  const goalModifierRegex = /\{(\d+)\/(\d+(\.\d+)?)\}/g;
-  match = goalModifierRegex.exec(name) || [];
-  const [, goalModifier, teamFactorModifier] = match;
+  let match2 = teamFactorRegex.exec(name) || [];
+  const [, teamFactorRangeMatch2] = match2;
 
+  const goalModifierRegex = /\{(\d+)\/(\d+(\.\d+)?)\}/g;
+  const goalModifier2Regex = /\|(\d+)\/(\d+(\.\d+)?)\|/g;
+  
+  match = goalModifierRegex.exec(name) || [];
+  match2 = goalModifier2Regex.exec(name) || [];
+  
+  const [, goalModifier, teamFactorModifier] = match;
+  const [, goalModifier2, teamFactorModifier2] = match2;
+  
   const parsedHomeTeamStats = parseTeamStats(homeTeamStats);
   const parsedGuestTeamStats = parseTeamStats(guestTeamStats);
 
@@ -47,7 +55,9 @@ function parseNotificationObject(notification) {
     parsedHomeTeamStats.goals,
     parsedGuestTeamStats.goals,
     goalModifier,
-    parseFloat(teamFactorModifier)
+    parseFloat(teamFactorModifier),
+    goalModifier2,
+    parseFloat(teamFactorModifier2)
   );
 
   if (teamFactorRange) {
@@ -62,7 +72,7 @@ function parseNotificationObject(notification) {
     gameId,
     gameDuration,
     name,
-    teamFactorRange: teamFactorRange || teamFactorRangeMatch,
+    teamFactorRange: teamFactorRange || teamFactorRangeMatch ,
     type,
     league,
     countryName,
@@ -131,9 +141,21 @@ function getTeamFactorRange(
   homeGoals,
   guestGoals,
   goalDiffLimit,
-  teamFactorModifier
+  teamFactorModifier,
+  goalDiffLimit2,
+  teamFactorModifier2
 ) {
-  if (Math.abs(homeGoals - guestGoals) >= goalDiffLimit) {
+
+  if ((Math.abs(homeGoals - guestGoals) >= goalDiffLimit2) && (Math.abs(homeGoals - guestGoals) < goalDiffLimit) ) {
+    
+    return teamFactorModifier2;
+
+  } else if (Math.abs(homeGoals - guestGoals) >= goalDiffLimit) {
+    
     return teamFactorModifier;
+  
+  } else {
+    //  block of code to be executed if the condition1 is false and condition2 is false
   }
+
 }

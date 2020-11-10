@@ -8,14 +8,18 @@ export const BET_DETAILS = Object.freeze({
   STAKE: 60,
 });
 
+export const NOTIFICATION_DETAILS = Object.freeze({
+  TIME: 4,
+});
+
 export const BOOK_TYPES_HIERARCHY = [
   "PIN",
   "ISN",
-  "SIN",
   "P88",
+  "3ET",
+  "SIN",
   "SBO",
   "IBC",
-  "3ET",
   "BEST",
 ];
 

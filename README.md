@@ -40,6 +40,32 @@
 ([+-]?(?:'.+?'|".+?"|[^+\- ]{1}[^ ]*))
 
 
+return football.MatchGames.filter((game) => {
+
+    const teamRgx = /U19|U20|U21|U23/i;
+
+    const team = dogRgx.test(name)
+      ? getBetTeamDogNotification(teamFactor, homeTeamStats, guestTeamStats)
+      : getBetTeamGeneralNotification(
+          teamFactor,
+          homeTeamStats,
+          guestTeamStats
+        );
+    const excludedLeagueMatch = /((No\. of)|EFOOTBALL)/gim.test(
+      game.LeagueName,
+      
+    );
+
+    const excludedTeamMatch = /((U20)|U21|U23|U19)/gim.test(
+      game.AwayTeam.Name,
+      game.HomeTeam.Name,
+      
+    );
+
+    return !excludedLeagueMatch && !excludedTeamMatch;
+
+
+
 - [x] Notification schema (Only type 1)
 
   - ID (Statistics notification ID)
@@ -78,3 +104,30 @@
 
 - [x] Logging
 - [ ] Rest API
+
+
+    const invalidNotificationtime = validateNotificationTime(
+    currentGameDuration,
+    gameDuration
+    );
+
+    if (!invalidNotificationtime) {
+    Logger.log("info", `Notification: ${id} not handled.`);
+    return false;
+    }
+
+
+    function validateNotificationTime(currentGameDuration, gameDuration) {
+    
+  const maxTime = 3;
+  const fakeDate = "1/1/1970 ";
+  const newcurrentGameDuration = "01:"+currentGameDuration;
+  const newgameDuration = "01:"+gameDuration;
+  console.log(newcurrentGameDuration);
+  console.log(newgameDuration);
+
+  const difference = new Date(new Date(fakeDate+newgameDuration) - new Date(fakeDate+newcurrentGameDuration)).toUTCString().split(" ")[4];
+  const [hours,minutes,seconds] = difference.split(":");
+    
+  return maxTime >= minutes;
+  }
