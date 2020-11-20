@@ -38,10 +38,10 @@ function PlaceBetService() {
       notificationId
     );
 
-    if (!bet.BetPlacementReference) {
+    if (!bet.BetPlacementReference || bet.BetPlacementMessage == "Error during bet processing" ) {
       Logger.log(
         "error",
-        `Unable to place bet, AsianOdds return null BetPlacementReference. Deleting notification ID: ${notificationId}`
+        `Unable to place bet, AsianOdds return null/Error during bet processing. Deleting notification ID: ${notificationId}`
       );
 
       await knex("notifications").where({ id: notificationId }).del();

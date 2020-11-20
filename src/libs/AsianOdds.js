@@ -147,7 +147,7 @@ const getFeeds = async (activeBookies, oddsType, sportId) => {
      
     const excludedTeamMatch = /U-17|U-19|U-20|U-21|U-23|U17|U19|U20|U21|U23/gim.test(game.HomeTeam.Name);
 
-    const excludedLeagueMatch = /((No\. of)|EFOOTBALL)/gim.test(game.LeagueName);
+    const excludedLeagueMatch = /((No\. of)|EFOOTBALL|FRIENDLY)/gim.test(game.LeagueName);
 
     const teamUnder = /U-17|U-19|U-20|U-21|U-23|U17|U19|U20|U21|U23/gim.test(global.globalhteamName); 
     

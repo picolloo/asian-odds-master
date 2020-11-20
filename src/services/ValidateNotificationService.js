@@ -1,3 +1,4 @@
+import { IdentifierRole } from "sucrase/dist/parser/tokenizer";
 import database from "../database";
 import Logger from "../logger";
 import { NOTIFICATION_DETAILS } from "../utils/constants.js";
@@ -15,6 +16,9 @@ function ValidateNotificationService() {
     gameDuration,
     currentGameDuration,
   }) {
+    
+    global.globalnotificationId = id;
+    
     const invalidNotificationName = validateNotificationNames(
       name,
       homeName,

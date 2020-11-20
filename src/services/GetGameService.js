@@ -1,5 +1,6 @@
 import Logger from "../logger";
 
+import knex from "../database";
 import { AsianOdds, TextSearch } from "../libs";
 import { HANDICAP } from "../utils/constants";
 
@@ -24,7 +25,8 @@ function GetGameService() {
       (await TextSearcher.find(counterTeamName));
 
     if (!teamName) {
-      throw `Game for ${betTeamName} vs ${counterTeamName} not found.`;
+      throw `Game for ${betTeamName} vs ${counterTeamName} not found.`,
+      await knex("notifications").where({ id: global.globalnotificationId }).del();
     }
 
     const game = getGameByTeamName({
@@ -35,7 +37,8 @@ function GetGameService() {
     });
 
     if (!game) {
-      throw `Game for ${betTeamName} vs ${counterTeamName} not found.`;
+      throw `Game for ${betTeamName} vs ${counterTeamName} not found.`,
+      await knex("notifications").where({ id: global.globalnotificationId }).del();
     }
 
     Logger.log(
