@@ -60,7 +60,7 @@ function parseNotificationObject(notification) {
     parseFloat(teamFactorModifier2)
   );
 
-  if (teamFactorRange) {
+  if (teamFactorRange && gameStatus < 5) {
     Logger.log(
       "info",
       `TeamFactorRange changed from ${teamFactorRangeMatch} to ${teamFactorRange} on notification ${id}`

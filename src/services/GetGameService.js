@@ -13,6 +13,9 @@ function GetGameService() {
     fulltimeFavoured,
     teamFactor,
   }) {
+    
+    const notificationDel = global.globalnotificationId;
+
     const sportId = await AsianOdds.getSportId("Football");
 
     const feeds = await AsianOdds.getFeeds(activeBookies, oddTypes, sportId);
@@ -26,7 +29,7 @@ function GetGameService() {
 
     if (!teamName) {
       throw `Game for ${betTeamName} vs ${counterTeamName} not found.`,
-      await knex("notifications").where({ id: global.globalnotificationId }).del();
+      await knex("notifications").where({ id: notificationDel }).del();
     }
 
     const game = getGameByTeamName({
@@ -38,7 +41,7 @@ function GetGameService() {
 
     if (!game) {
       throw `Game for ${betTeamName} vs ${counterTeamName} not found.`,
-      await knex("notifications").where({ id: global.globalnotificationId }).del();
+      await knex("notifications").where({ id: notificationDel }).del();
     }
 
     Logger.log(

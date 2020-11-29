@@ -31,7 +31,7 @@ function ValidateNotificationService() {
     }
 
     if (!odds || !odds.aft || type !== 1 || gameStatus >= 5) {
-      Logger.log("info", `Notification: ${id} not handled.`);
+      //Logger.log("info", `Notification: ${id} not handled.`);
       return false;
     }
 
@@ -66,7 +66,7 @@ function ValidateNotificationService() {
       );
   
       if (!invalidNotificationtime) {
-        Logger.log("info", `Notification: ${id} already handled.`);
+        Logger.log("info", `Notification: ${id} already handled by time.`);
       return false;
     }
 
@@ -128,9 +128,9 @@ function ValidateNotificationService() {
     
     const minutes = Math.abs(gameDurationMinutes - currentgameDurationMinutes);
     
-    if (gameDuration == "45:00" || gameDuration == "90:00" ){
-    return false;
-    }   
+//    if (gameDuration == "45:00" || gameDuration == "90:00" ){
+//    return false;
+//    }   
 
     return maxTime >= minutes;
     }

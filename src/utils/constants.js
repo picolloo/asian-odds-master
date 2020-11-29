@@ -9,7 +9,7 @@ export const BET_DETAILS = Object.freeze({
 });
 
 export const NOTIFICATION_DETAILS = Object.freeze({
-  TIME: 4,
+  TIME: 10,
 });
 
 export const BOOK_TYPES_HIERARCHY = [
