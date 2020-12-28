@@ -88,6 +88,28 @@ function GetBetTeamService() {
         teamFactor,
       };
 
+      // EQUIPA DE FORA A GANHAR / 0 CARTOES / LINHAS == 0
+
+    if ((guestTeamStats.goals > homeTeamStats.goals) && (teamFactor == 0) && (homeTeamStats.redCards === guestTeamStats.redCards))
+      return {
+        betTeamName: homeTeamStats.name,
+        counterTeamName: guestTeamStats.name,
+        type: TEAM.HOME,
+        fulltimeFavoured: 0,
+        teamFactor,
+      };
+      
+      // EQUIPA DE CASA A GANHAR / 0 CARTOES / LINHAS == 0
+
+    if ((guestTeamStats.goals < homeTeamStats.goals) && (teamFactor == 0) && (homeTeamStats.redCards === guestTeamStats.redCards))
+      return {
+        betTeamName: guestTeamStats.name,
+        counterTeamName: homeTeamStats.name,
+        type: TEAM.GUEST,
+        fulltimeFavoured: 0,
+        teamFactor,
+      };
+
       // EQUIPA DE FORA A GANHAR / EQUIPA DE FORA + CARTOES / LINHAS <> 0
 
       if ((guestTeamStats.goals > homeTeamStats.goals) && (teamFactor != 0) && (homeTeamStats.redCards < guestTeamStats.redCards))
@@ -108,6 +130,28 @@ function GetBetTeamService() {
         type: TEAM.GUEST,
         fulltimeFavoured: 2,
         teamFactor: teamFactor * -1,
+      };
+
+      // EQUIPA DE FORA A GANHAR / EQUIPA DE FORA + CARTOES / LINHAS == 0
+      
+      if ((guestTeamStats.goals > homeTeamStats.goals) && (teamFactor == 0) && (homeTeamStats.redCards < guestTeamStats.redCards))
+      return {
+        betTeamName: homeTeamStats.name,
+        counterTeamName: guestTeamStats.name,
+        type: TEAM.HOME,
+        fulltimeFavoured: 0,
+        teamFactor,
+      };
+      
+      // EQUIPA DE CASA A GANHAR / EQUIPA DE CASA + CARTOES / LINHAS == 0
+
+    if ((guestTeamStats.goals < homeTeamStats.goals) && (teamFactor == 0) && (homeTeamStats.redCards > guestTeamStats.redCards))
+      return {
+        betTeamName: guestTeamStats.name,
+        counterTeamName: homeTeamStats.name,
+        type: TEAM.GUEST,
+        fulltimeFavoured: 0,
+        teamFactor,
       };
 
       // EQUIPA DE FORA A GANHAR / EQUIPA DE FORA - CARTOES / LINHAS <> 0
@@ -131,6 +175,28 @@ function GetBetTeamService() {
         fulltimeFavoured: 1,
         teamFactor,
       };
+
+    // EQUIPA DE FORA A GANHAR / EQUIPA DE FORA - CARTOES / LINHAS == 0
+
+    if ((guestTeamStats.goals > homeTeamStats.goals) && (teamFactor == 0) && (homeTeamStats.redCards > guestTeamStats.redCards))
+    return {
+      betTeamName: homeTeamStats.name,
+      counterTeamName: guestTeamStats.name,
+      type: TEAM.HOME,
+      fulltimeFavoured: 0,
+      teamFactor,
+    };
+
+    // EQUIPA DE CASA A GANHAR / EQUIPA DE CASA - CARTOES / LINHAS == 0
+
+  if ((guestTeamStats.goals < homeTeamStats.goals) && (teamFactor == 0) && (homeTeamStats.redCards < guestTeamStats.redCards))
+    return {
+      betTeamName: guestTeamStats.name,
+      counterTeamName: homeTeamStats.name,
+      type: TEAM.GUEST,
+      fulltimeFavoured: 0,
+      teamFactor,
+    };
 
       // EQUIPA DE FORA A GANHAR / CARTOES 0 / LINHAS = 0
 
@@ -177,7 +243,7 @@ function GetBetTeamService() {
         teamFactor: teamFactor,
       };
 
-      // EMPATADO /  EQUIPA DE CASA + CARTOES / LINHAS <> 0
+      // EMPATADO /  EQUIPA DE CASA + CARTOES / LINHAS == 0
 
       if ((guestTeamStats.goals === homeTeamStats.goals) && (homeTeamStats.redCards > guestTeamStats.redCards) && (teamFactor == 0))
       return {
@@ -190,7 +256,7 @@ function GetBetTeamService() {
 
       };
     
-     // EMPATADO /  EQUIPA DE FORA + CARTOES / LINHAS <> 0 
+     // EMPATADO /  EQUIPA DE FORA + CARTOES / LINHAS == 0 
 
     if ((guestTeamStats.goals === homeTeamStats.goals) && (guestTeamStats.redCards > homeTeamStats.redCards) && (teamFactor == 0))
       return {
