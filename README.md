@@ -1,5 +1,11 @@
 # Asian Odds BOT
 
+$ docker-machine start aws01
+$ docker-machine env aws01 --shell bash
+$ eval $("D:\Users\str_afd\bin\docker-machine.exe" env aws01 --shell bash)
+
+
+
 - [x] Odds only **aft**/gft (team factor | valor da aposta home | valor da aposta guest)
 
   - Valor da aposta -0,10
