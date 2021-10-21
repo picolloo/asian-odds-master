@@ -30,45 +30,43 @@ function PlaceBetService() {
       })}`
     );
 
-    const bet = await AsianOdds.placeBet(
-      gameId,
-      defaultStake,
-      bookTypes,
-      teamType,
-      notificationId
-    );
-
-    if (!bet.BetPlacementReference || bet.BetPlacementMessage == "Error during bet processing" ) {
-      Logger.log(
-        "error",
-        `Unable to place bet, AsianOdds return null/Error during bet processing. Deleting notification ID: ${notificationId}`
+    try {
+      const bet = await AsianOdds.placeBet(
+        gameId,
+        defaultStake,
+        bookTypes,
+        teamType,
+        notificationId
       );
 
+      if (!bet.BetPlacementReference || bet.BetPlacementMessage == "Error during bet processing" ) {
+        throw new Error(`Unable to place bet, AsianOdds return null/Error during bet processing. Deleting notification ID: ${notificationId}`)
+      }
+  
+      Logger.log(
+        "info",
+        `Bet placed on ${teamName} for ${defaultStake}. Reference: ${bet.BetPlacementReference}`
+      );
+  
+      await knex("notifications")
+        .where({ id: notificationId })
+        .update({ placedBet: true });
+  
+      //await knex("bets").insert({
+      //  team: teamName,
+      //  price: defaultStake,
+      //  notificationId,
+        // retries,
+      //  reference: bet.BetPlacementReference,
+      //});
+  
+      await Queue.add("ValidateBet", {
+        notificationId: notificationId,
+      });
+    } catch(e) {
+      Logger.log("error", e.message);
       await knex("notifications").where({ id: notificationId }).del();
-
-      return;
     }
-
-    Logger.log(
-      "info",
-      `Bet placed on ${teamName} for ${defaultStake}. Reference: ${bet.BetPlacementReference}`
-    );
-
-    await knex("notifications")
-      .where({ id: notificationId })
-      .update({ placedBet: true });
-
-    //await knex("bets").insert({
-    //  team: teamName,
-    //  price: defaultStake,
-    //  notificationId,
-      // retries,
-    //  reference: bet.BetPlacementReference,
-    //});
-
-    await Queue.add("ValidateBet", {
-      notificationId: notificationId,
-    });
   }
 
   return {
