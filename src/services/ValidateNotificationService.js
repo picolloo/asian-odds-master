@@ -26,7 +26,7 @@ function ValidateNotificationService() {
     );
 
     if (!invalidNotificationName) {
-      Logger.log("info", `Notification: ${id} for female or friendly league not handled.`);
+      //Logger.log("info", `Notification: ${id} for female or friendly league not handled.`);
       return false;
     }
 
@@ -38,7 +38,7 @@ function ValidateNotificationService() {
     const notificationFound = await database("notifications").where({ id });
 
     if (notificationFound.length) {
-      Logger.log("info", `Notification: ${id} already handled.`);
+      //Logger.log("info", `Notification: ${id} already handled.`);
       return false;
     }
 
@@ -117,7 +117,7 @@ function ValidateNotificationService() {
   }
 
   function validateNotificationNames(...names) {
-    return !names.some((name) => /(women|friendl)/gim.test(name));
+    return !names.some((name) => /(women|friendl|supercup)/gim.test(name));
   }
 
   function validateNotificationTime(currentGameDuration, gameDuration) {

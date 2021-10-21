@@ -72,6 +72,30 @@ const isLoggedIn = async () => {
   return data.Result.SuccessfulLogin;
 };
 
+const ValidatePreBet = async () => {
+  const { data } = await axios.get(`${await Store.get("AOUrl")}/GetBetByReference`, {
+    headers: {
+      accept: "application/json",
+      AOToken: await Store.get("AOToken"),
+    },
+    params: {
+      betReference: "WA-" + global.globalnotificationId,
+      
+    },
+  });
+
+  if (data.Code === 0) {
+    throw new Error(
+      `Bet already exist for notification: ${global.globalnotificationId}`
+    );
+  }
+
+  Logger.log(
+    "info",
+    `Bet doesn't exist for notification: ${global.globalnotificationId}. `
+  );
+}; 
+
 const getUserInformation = async () => {
   const { data } = await axios.get(
     `${await Store.get("AOUrl")}/GetUserInformation`,
@@ -169,6 +193,8 @@ const getFeeds = async (activeBookies, oddsType, sportId) => {
     fulltimeFavoured: game.FullTimeFavoured,
     handicap: game.FullTimeHdp.Handicap,
     bookieOdds: game.FullTimeHdp.BookieOdds,
+    WillBeRemoved: game.WillBeRemoved,
+    IsActive: game.IsActive,
   }));
 };
 
@@ -246,6 +272,7 @@ const ValidateBet = async (notificationId) => {
 export default {
   login,
   isLoggedIn,
+  ValidatePreBet,
   getUserInformation,
   getSportId,
   getFeeds,

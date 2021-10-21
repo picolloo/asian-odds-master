@@ -1,5 +1,10 @@
 # Asian Odds BOT
 
+ERROR TYPE: -1303 - Valor Baixo
+
+
+
+
 $ docker-machine start aws01
 $ docker-machine env aws01 --shell bash
 $ eval $("D:\Users\str_afd\bin\docker-machine.exe" env aws01 --shell bash)

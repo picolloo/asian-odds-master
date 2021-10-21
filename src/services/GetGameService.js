@@ -12,6 +12,8 @@ function GetGameService() {
     oddTypes,
     fulltimeFavoured,
     teamFactor,
+    WillBeRemoved,
+    IsActive,
   }) {
     
     const notificationDel = global.globalnotificationId;
@@ -37,6 +39,8 @@ function GetGameService() {
       feeds,
       fulltimeFavoured,
       teamFactor,
+      WillBeRemoved,
+      IsActive,
     });
 
     if (!game) {
@@ -46,7 +50,7 @@ function GetGameService() {
 
     Logger.log(
       "info",
-      `Game for ${betTeamName} vs ${counterTeamName} successfuly found. GameID: ${game.id}`
+      `Game for ${betTeamName} vs ${counterTeamName} successfuly found. GameID: ${game.id}. WillBeRemoved: ${game.WillBeRemoved}. IsActive:${game.IsActive}`
     );
 
     return game;
@@ -71,8 +75,9 @@ function GetGameService() {
       (feed) =>
         (feed.homeTeam.name === teamName || feed.guestTeam.name === teamName) &&
         feed.fulltimeFavoured == fulltimeFavoured &&
-        HANDICAP[teamFactor] == feed.handicap
-        
+        HANDICAP[teamFactor] == feed.handicap &&
+        feed.WillBeRemoved == false &&
+        feed.IsActive == true
     );
     
     Logger.log(

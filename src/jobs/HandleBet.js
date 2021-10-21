@@ -22,13 +22,14 @@ export default {
     },
   }) {
     await LoginAsianOddsService().execute();
-
+    await AsianOdds.ValidatePreBet();
+      
     const {
       activeBookies,
       oddTypes,
       defaultStake,
     } = await AsianOdds.getUserInformation();
-
+    
     const game = await GetGameService().execute({
       betTeamName,
       counterTeamName,
